@@ -8,7 +8,7 @@ namespace API_Openstack
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseUrls("http://*:5000")
+                .UseUrls("http://*:8282")
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
