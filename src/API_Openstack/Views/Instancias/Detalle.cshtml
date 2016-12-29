@@ -1,0 +1,39 @@
+﻿@model API_Openstack.Model.Instancia2
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Detalle de instacia @Html.DisplayFor(model => model.name)</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>        
+        <tr>
+               <td>
+                    @Html.DisplayFor(model => model.name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.status)
+                </td>               
+            </tr>        
+    </tbody>
+</table>

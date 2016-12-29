@@ -11,11 +11,14 @@ namespace API_Openstack.Controllers
         // GET: /Instancias/
         public  IActionResult Index()
         {
-            ViewData["mensaje"] = "Listado de instancias";
-
-            var listado_instancias = API.ListarInstancias();                     
+            var listado_instancias = API.API_ListarInstancias();                     
             
             return View(listado_instancias);            
+        }
+
+        public IActionResult Detalle(string id)
+        {                       
+            return View(API.API_DetalleDeInstancia(id));
         }
     }
 }

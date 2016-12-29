@@ -12,10 +12,16 @@ namespace API_Openstack.Model
         private static HttpClient Client = new HttpClient();
         private static string token = string.Empty;
 
-        public static List<Instancia> ListarInstancias()
+        public static List<Instancia> API_ListarInstancias()
         {
             ValidarToken();
-            return ListarInstancias(token);
+            return ListarInstancias();
+        }
+
+        public static Instancia2 API_DetalleDeInstancia(string id)
+        {
+            ValidarToken();
+            return DetalleDeInstancia(id);
         }
 
 
@@ -39,7 +45,7 @@ namespace API_Openstack.Model
                                     },
                                     ""scope"": {
                                         ""project"": {
-                                            ""id"": ""c2dac643b9114da0a1d74904cce56777""
+                                            ""id"": ""e70b21ba6d19403d95a6d86d96e4d7e2""
                                         }
                                     }
                                 }
@@ -69,11 +75,12 @@ namespace API_Openstack.Model
             {
                 PedirToken();
                 Client.DefaultRequestHeaders.Add("x-auth-token", token);
+                
             }
 
         }
 
-        private static List<Instancia> ListarInstancias(string token)
+        private static List<Instancia> ListarInstancias()
         {            
             var result = Client.GetAsync("http://10.105.231.208:8774/v2.1/servers").Result;         
             
@@ -87,6 +94,21 @@ namespace API_Openstack.Model
             return lista_instacias.servers;
             
            }
+
+        private static Instancia2 DetalleDeInstancia(string id)
+        {
+            string url = "http://10.105.231.208:8774/v2.1/servers/" + id;
+
+            var result = Client.GetAsync(url).Result;
+            var responseContent = result.Content.ReadAsStringAsync();
+
+            UnaInstancia instancia = new UnaInstancia();
+
+            instancia = JsonConvert.DeserializeObject<UnaInstancia>(responseContent.Result);
+
+            return instancia.server;
+
+        }
 
     }
 }
