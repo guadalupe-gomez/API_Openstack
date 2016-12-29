@@ -29,16 +29,23 @@ namespace API_Openstack.Model
         public string name { get; set; }
         public string id { get; set; }
         public string status { get; set; }
-        public ip addresses { get; set; }
+        public string created { get; set; }
+        public FlavorID flavor { get; set; }
     }
 
-    public class ip
+    public class FlavorID
     {
-        public ip_interna interna { get; set; }
+        public string id { get; set; }
+        public Flavor flavor { get; set; }
+              
     }
-    public class ip_interna
+
+    public class Flavor
     {
-        public string addr { get; set; }
+        public string name { get; set; } 
+        public string ram { get; set; }
+        public string vcpus { get; set; }
+        public string disk { get; set; }
     }
     
    

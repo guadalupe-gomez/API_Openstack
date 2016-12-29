@@ -17,8 +17,21 @@ namespace API_Openstack.Controllers
         }
 
         public IActionResult Detalle(string id)
-        {                       
-            return View(API.API_DetalleDeInstancia(id));
+        {
+            try
+            {
+                return View(API.API_DetalleDeInstancia(id));
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        public IActionResult Borrar(string id)
+        {
+            API.API_BorrarInstancia(id);
+            return RedirectToAction("Index");
         }
     }
 }

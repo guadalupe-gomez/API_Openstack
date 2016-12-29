@@ -30,10 +30,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.id)
             </td>            
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+            <td>                
                 <a asp-action="Detalle" asp-route-id="@item.id">Detalle</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Borrar" asp-route-id="@item.id">Borrar</a>
             </td>
         </tr>
     }

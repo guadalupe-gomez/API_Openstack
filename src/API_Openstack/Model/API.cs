@@ -24,6 +24,12 @@ namespace API_Openstack.Model
             return DetalleDeInstancia(id);
         }
 
+        public static void API_BorrarInstancia(string id)
+        {
+            ValidarToken();
+            BorrarInstancia(id);
+        }
+
 
         private static void PedirToken()
         {
@@ -106,9 +112,41 @@ namespace API_Openstack.Model
 
             instancia = JsonConvert.DeserializeObject<UnaInstancia>(responseContent.Result);
 
-            return instancia.server;
+            try
+            {
+
+                instancia.server.flavor.flavor = DetalleFlavor(instancia.server.flavor);
+                return instancia.server;
+            }
+            catch
+            {
+                throw (new System.Exception("No se encuentra"));
+            }          
 
         }
+
+        private static Flavor DetalleFlavor(FlavorID fl)
+        {
+            string url = "http://10.105.231.208:8774/v2/flavors/" + fl.id;
+
+            var result = Client.GetAsync(url).Result;
+            var responseContent = result.Content.ReadAsStringAsync();
+
+            fl = JsonConvert.DeserializeObject<FlavorID>(responseContent.Result);
+            return fl.flavor;
+
+        }
+
+        private static void BorrarInstancia(string id)
+        {
+            string url = "http://10.105.231.208:8774/v2.1/servers/" + id;
+
+            var result = Client.DeleteAsync(url).Result;
+        }
+
+
+        
+
 
     }
 }
