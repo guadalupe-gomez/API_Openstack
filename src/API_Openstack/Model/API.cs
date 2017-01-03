@@ -3,7 +3,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json;
-
+using System;
 
 namespace API_Openstack.Model
 {
@@ -57,7 +57,9 @@ namespace API_Openstack.Model
                                 }
                             }";
 
-            var result = Client.PostAsync("http://10.105.231.208/identity/v3/auth/tokens", new StringContent(json, Encoding.UTF8, "application/json")).Result;
+            var identity_url = Environment.GetEnvironmentVariable("API_OPENSTACK_IDENTITY");
+
+            var result = Client.PostAsync(identity_url + "/v3/auth/tokens", new StringContent(json, Encoding.UTF8, "application/json")).Result;
                                    
             if (result.Content != null)
             {
@@ -127,7 +129,7 @@ namespace API_Openstack.Model
 
         private static Flavor DetalleFlavor(FlavorID fl)
         {
-            string url = "http://10.105.231.208:8774/v2/flavors/" + fl.id;
+            string url = "http://10.105.231.208:8774/v2.1/flavors/" + fl.id;
 
             var result = Client.GetAsync(url).Result;
             var responseContent = result.Content.ReadAsStringAsync();
