@@ -89,8 +89,10 @@ namespace API_Openstack.Model
         }
 
         private static List<Instancia> ListarInstancias()
-        {            
-            var result = Client.GetAsync("http://10.105.231.208:8774/v2.1/servers").Result;         
+        {
+            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
+
+            var result = Client.GetAsync(url_compute + "/servers").Result;         
             
             //TODO: verificar que no reciba 401
             var responseContent = result.Content.ReadAsStringAsync();
@@ -105,9 +107,9 @@ namespace API_Openstack.Model
 
         private static Instancia2 DetalleDeInstancia(string id)
         {
-            string url = "http://10.105.231.208:8774/v2.1/servers/" + id;
-
-            var result = Client.GetAsync(url).Result;
+            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
+            
+            var result = Client.GetAsync(url_compute + "/servers/" + id ).Result;
             var responseContent = result.Content.ReadAsStringAsync();
 
             UnaInstancia instancia = new UnaInstancia();
@@ -129,9 +131,9 @@ namespace API_Openstack.Model
 
         private static Flavor DetalleFlavor(FlavorID fl)
         {
-            string url = "http://10.105.231.208:8774/v2.1/flavors/" + fl.id;
+            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");            
 
-            var result = Client.GetAsync(url).Result;
+            var result = Client.GetAsync(url_compute + "/flavors/" + fl.id).Result;
             var responseContent = result.Content.ReadAsStringAsync();
 
             fl = JsonConvert.DeserializeObject<FlavorID>(responseContent.Result);
@@ -141,9 +143,8 @@ namespace API_Openstack.Model
 
         private static void BorrarInstancia(string id)
         {
-            string url = "http://10.105.231.208:8774/v2.1/servers/" + id;
-
-            var result = Client.DeleteAsync(url).Result;
+            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
+            var result = Client.DeleteAsync(url_compute + "/servers/" + id).Result;
         }
 
 
