@@ -1,9 +1,9 @@
 # API_Openstack
 
-Ejemplo de Api de Openstack con .Net Core
+<h1>Ejemplo de Api de Openstack con .Net Core</h1>
 
 
-Ejemplo de Dockerfile para correr el ejemplo dentro de un contenedor:
+<h3>Ejemplo de Dockerfile para correr la aplicación dentro de un contenedor:</h3>
 
     # We use the microsoft/dotnet image as a starting point.
     FROM microsoft/dotnet:latest
@@ -38,4 +38,10 @@ Ejemplo de Dockerfile para correr el ejemplo dentro de un contenedor:
 
     # Start the application using dotnet!!!
     ENTRYPOINT dotnet run
+
+
+<h3>Build y Run:</h3>
+
+docker build -t api_openstack .
+docker run -it -p 8282:8282 api_openstack
 
