@@ -43,5 +43,6 @@
 <h3>Build y Run:</h3>
 
 docker build -t api_openstack .
+
 docker run -it -p 8282:8282 api_openstack
 
