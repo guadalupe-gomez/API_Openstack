@@ -72,7 +72,7 @@ namespace API_Openstack.Model
         private static List<Instancia> ListarInstancias()
         {
             
-            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
+            var url_compute = Environment.GetEnvironmentVariable("API_OPENSTACK_COMPUTE");
 
             var result = Client.GetAsync(url_compute + "/servers").Result;         
             
@@ -90,7 +90,7 @@ namespace API_Openstack.Model
         private static Instancia2 DetalleDeInstancia(string id)
         {
             
-            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
+            var url_compute = Environment.GetEnvironmentVariable("API_OPENSTACK_COMPUTE");
 
             var result = Client.GetAsync(url_compute + "/servers/" + id ).Result;
             var responseContent = result.Content.ReadAsStringAsync();
@@ -115,7 +115,7 @@ namespace API_Openstack.Model
         private static Flavor DetalleFlavor(FlavorID fl)
         {
             
-            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");            
+            var url_compute = Environment.GetEnvironmentVariable("API_OPENSTACK_COMPUTE");            
 
             var result = Client.GetAsync(url_compute + "/flavors/" + fl.id).Result;
             var responseContent = result.Content.ReadAsStringAsync();
@@ -128,7 +128,7 @@ namespace API_Openstack.Model
         private static void BorrarInstancia(string id)
         {
             
-            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
+            var url_compute = Environment.GetEnvironmentVariable("API_OPENSTACK_COMPUTE");
             var result = Client.DeleteAsync(url_compute + "/servers/" + id).Result;
         }
 
