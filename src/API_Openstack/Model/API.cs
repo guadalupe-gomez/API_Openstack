@@ -33,30 +33,11 @@ namespace API_Openstack.Model
 
         private static void PedirToken()
         {
-            string json = @"{
-                               ""auth"": {
-                                    ""identity"": {
-                                            ""methods"": [
-                                                ""password""
-                                        ],
-                                        ""password"": {
-                                            ""user"": {
-                                                ""name"": ""demo"",
-                                                ""domain"": {
-                                                    ""name"": ""default""
-                                                },
-                                                ""password"": ""admin""
-                                            }
-                                        }
-                                    },
-                                    ""scope"": {
-                                        ""project"": {
-                                            ""id"": ""e70b21ba6d19403d95a6d86d96e4d7e2""
-                                        }
-                                    }
-                                }
-                            }";
-
+            
+            Token obj_token = new Token(Environment.GetEnvironmentVariable("API_OPENSTACK_USER"), Environment.GetEnvironmentVariable("API_OPENSTACK_PASSWORD"), Environment.GetEnvironmentVariable("API_OPENSTACK_PROJECT_ID"));
+            
+            string json = JsonConvert.SerializeObject(obj_token);
+            
             var identity_url = Environment.GetEnvironmentVariable("API_OPENSTACK_IDENTITY");
 
             var result = Client.PostAsync(identity_url + "/v3/auth/tokens", new StringContent(json, Encoding.UTF8, "application/json")).Result;
@@ -90,6 +71,7 @@ namespace API_Openstack.Model
 
         private static List<Instancia> ListarInstancias()
         {
+            
             var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
 
             var result = Client.GetAsync(url_compute + "/servers").Result;         
@@ -107,8 +89,9 @@ namespace API_Openstack.Model
 
         private static Instancia2 DetalleDeInstancia(string id)
         {
-            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
             
+            var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
+
             var result = Client.GetAsync(url_compute + "/servers/" + id ).Result;
             var responseContent = result.Content.ReadAsStringAsync();
 
@@ -131,6 +114,7 @@ namespace API_Openstack.Model
 
         private static Flavor DetalleFlavor(FlavorID fl)
         {
+            
             var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");            
 
             var result = Client.GetAsync(url_compute + "/flavors/" + fl.id).Result;
@@ -143,6 +127,7 @@ namespace API_Openstack.Model
 
         private static void BorrarInstancia(string id)
         {
+            
             var url_compute = Environment.GetEnvironmentVariable(" API_OPENSTACK_COMPUTE");
             var result = Client.DeleteAsync(url_compute + "/servers/" + id).Result;
         }
